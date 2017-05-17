@@ -5,6 +5,8 @@
  * The control will  be available in the list of controls that appear in ModelConnector desginer dialog
  * in the ControlClass entry.
  */
+use QCubed\ModelConnector\ControlType;
 
-$controls[\QCubed\ModelConnector\ControlType::TEXT][] = 'QCubed\\Bootstrap\\TextBox';
+$controls[ControlType::TEXT][] = 'QCubed\\Bootstrap\\TextBox';
 
+return $controls;
