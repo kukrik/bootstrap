@@ -23,9 +23,6 @@ use QCubed\Project\Control\FormBase as QForm;
  *
  * The following properties come from the trait
  *
- * @property-write string $ValidationError string to display on validation error
- * @property-write string $Warning string to display on warning
- * @property-write boolean $Display True to display the control
  * @property-write string $LabelCssClass Css class for the label
  * @property-write string $HorizontalClass Css class to use for horizontal display
  *
@@ -33,7 +30,7 @@ use QCubed\Project\Control\FormBase as QForm;
  *
  * @package QCubed\Bootstrap
  */
-abstract class Control extends QControl
+abstract class Control extends \QCubed\Control\ControlBase
 {
     use ControlTrait;    // Pass off most functionality to the trait.
 
