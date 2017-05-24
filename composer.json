@@ -1,7 +1,7 @@
 {
     "name": "qcubed/bootstrap",
     "description": "QCubed wrappers for Twitter Bootstrap. Specifically for QCubed v4 and above.",
-    "type": "qcubed-plugin",
+    "type": "qcubed-library",
     "keywords": ["qcubed", "bootstrap"],
     "license": "MIT",
     "require": {
