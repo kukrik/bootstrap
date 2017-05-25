@@ -9,12 +9,12 @@
 
 namespace QCubed\Bootstrap;
 
+use QCubed\Control\ControlBase;
+use QCubed\Control\FormBase;
 use QCubed\Control\HList;
 use QCubed\Html;
 use QCubed\Project\Application;
 use QCubed\Js;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 
 /**
  * Class Carousel
@@ -31,7 +31,7 @@ class Carousel extends HList {
 
     /**
      * Carousel constructor.
-     * @param QControl|QForm $objParent
+     * @param ControlBase|FormBase $objParent
      * @param null $strControlId
      */
 	public function __construct ($objParent, $strControlId = null) {
@@ -120,13 +120,9 @@ TMPL;
 		return $this->renderTag('div', ['data-ride'=>'carousel'], null, $strHtml);
 	}
 
-    /**
-     * @return string
-     */
-	public function getEndScript() {
+	public function makeJqWidget() {
 		Application::executeControlCommand($this->ControlId, 'on', 'click', '.item',
 			new Js\Closure("jQuery(this).trigger('bscarousselect', this.id)"), Application::PRIORITY_HIGH);
-		return parent::getEndScript();
 	}
 
 }

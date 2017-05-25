@@ -21,7 +21,7 @@ use QCubed\Type;
 /**
  * Class ControlTrait
  *
- * Base bootstrap control trait. The preferred method of adding bootstrap functionality is to make your QControl class
+ * Base bootstrap control trait. The preferred method of adding bootstrap functionality is to make your Control class
  * inherit from the Control class in Control.class.php. Alternatively you can use this trait to make a control a
  * bootstrap control, but you have to be careful of method collisions. The best way to do this is probably to
  * use it in a derived class of the base class.

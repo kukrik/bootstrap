@@ -13,12 +13,13 @@ include_once("Bootstrap.php");
 
 
 use QCubed\Bootstrap\Event\NavSelect;
+use QCubed\Control\ControlBase;
+use QCubed\Control\FormBase;
 use QCubed\Control\HList;
+use QCubed\Control\HListItem;
 use QCubed\Control\ListItemStyle;
 use QCubed\Exception\Caller;
 use QCubed\Html;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Action;
 use QCubed\QString;
 use QCubed\Type;
@@ -51,7 +52,7 @@ class Nav extends HList
 
     /**
      * Nav constructor.
-     * @param QControl|QForm $objParent
+     * @param ControlBase|FormBase $objParent
      * @param null|string $strControlId
      */
     public function __construct($objParent, $strControlId = null)
@@ -72,7 +73,7 @@ class Nav extends HList
     }
 
     /**
-     * @param \QHListItem $objItem
+     * @param HListItem $objItem
      * @return ListItemStyle
      */
     protected function getItemStyler($objItem)
@@ -91,7 +92,7 @@ class Nav extends HList
     }
 
     /**
-     * @param \QHListItem $objItem
+     * @param HListItem $objItem
      * @return string
      */
     protected function getItemText($objItem)
@@ -114,13 +115,11 @@ class Nav extends HList
     /**
      * A tab was clicked. Records the value of the clicked tab.
      *
-     * @param $strFormId
-     * @param $strControlId
-     * @param $strParameter
+     * @param array $params
      */
-    protected function tab_Click($strFormId, $strControlId, $strParameter)
+    protected function tab_Click($params)
     {
-        $this->strActiveItemId = $strParameter;
+        $this->strActiveItemId = $params[ControlBase::ACTION_PARAM];
     }
 
     /**
@@ -171,10 +170,10 @@ class Nav extends HList
     /**
      * Renders the child panels as follow on panes.
      *
-     * @param QControl $objControl
+     * @param ControlBase $objControl
      * @return string
      */
-    protected function renderChildPanelName(QControl $objControl)
+    protected function renderChildPanelName(ControlBase $objControl)
     {
         if ($this->strActiveItemId === null) {
             $this->strActiveItemId = $objControl->ControlId;

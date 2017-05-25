@@ -14,8 +14,6 @@ use QCubed\Control\RadioButtonList;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Html;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed\TagStyler;
 use QCubed\Type;
 
@@ -38,16 +36,6 @@ class RadioList extends RadioButtonList
     protected $blnWrapLabel = true;
     protected $strButtonGroupClass = "radio";
     protected $strButtonStyle = Bootstrap::BUTTON_DEFAULT;
-
-    /**
-     * RadioList constructor.
-     * @param QControl|QForm $objParentObject
-     * @param null $strControlId
-     */
-    public function __construct($objParentObject, $strControlId = null)
-    {
-        parent::__construct($objParentObject, $strControlId);
-    }
 
     /**
      * Used by drawing routines to render the attributes associated with this control.

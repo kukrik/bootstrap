@@ -9,7 +9,7 @@
 
 namespace QCubed\Bootstrap;
 
-use QCubed\Project\Control\ControlBase as QControl;
+use QCubed as Q;
 
 /**
  * If you are compiling your own bootstrap css file, point to it with the QCUBED_BOOTSTRAP_CSS define. Otherwise it will take
@@ -560,9 +560,9 @@ abstract class Bootstrap
      * should instead include both files below in your QForm javascript files to auto load by overloading
      * GetFormJavaScripts in your QForm class.
      *
-     * @param QControl $objControl
+     * @param Q\Control\ControlBase $objControl
      */
-    public static function loadJS(QControl $objControl)
+    public static function loadJS(Q\Control\ControlBase $objControl)
     {
         $objControl->addJavascriptFile(QCUBED_BOOTSTRAP_JS);
         $objControl->addJavascriptFile(QCUBED_BOOTSTRAP_ASSETS_URL . '/js/qshim.js'); // for jquery ui compatibility

@@ -9,13 +9,13 @@
 
 namespace QCubed\Bootstrap;
 
+use QCubed\Control\FormBase;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Project\Application;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Js;
 use QCubed\Type;
+use QCubed as Q;
 
 /**
  * Class Navbar
@@ -29,7 +29,7 @@ use QCubed\Type;
  *
  * @package QCubed\Bootstrap
  */
-class Navbar extends QControl
+class Navbar extends Q\Project\Control\ControlBase
 {
     protected $strHeaderAnchor;
     protected $strHeaderText;
@@ -42,7 +42,7 @@ class Navbar extends QControl
 
     /**
      * Navbar constructor.
-     * @param QControl|QForm $objParent
+     * @param Q\Control\ControlBase|FormBase $objParent
      * @param null $strControlId
      */
     public function __construct($objParent, $strControlId = null)
@@ -101,15 +101,14 @@ TMPL;
     }
 
     /**
-     * @return string
      */
-    public function getEndScript()
+    protected function makeJqWidget()
     {
+        parent::makeJqWidget();
         Application::executeControlCommand(
             $this->ControlId, 'on', 'click', 'li',
             new Js\Closure("qcubed.recordControlModification ('{$this->ControlId}', 'SelectedId', this.id); jQuery(this).trigger ('bsmenubarselect', this.id)"),
             Application::PRIORITY_HIGH);
-        return parent::getEndScript();
     }
 
 

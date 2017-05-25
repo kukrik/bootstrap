@@ -10,6 +10,8 @@
 namespace QCubed\Bootstrap;
 
 use QCubed\Bootstrap\Event\ModalHidden;
+use QCubed\Control\ControlBase;
+use QCubed\Control\FormBase;
 use QCubed\Control\Panel;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
@@ -17,8 +19,6 @@ use QCubed\Project\Application;
 use QCubed\Project\Jqui\Dialog;
 use QCubed\Action;
 use QCubed\Type;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 
 /**
  * Class Modal
@@ -53,7 +53,7 @@ use QCubed\Project\Control\FormBase as QForm;
  * You do not need to draw the dialog. It will automatically be drawn for you.
  *
  * Since Modal is a descendant of \QCubed\Control\Panel, you can do anything you can to a normal \QCubed\Control\Panel,
- * including add QControls and use a template. When you want to hide the dialog, call <code>HideDialogBox()</code>
+ * including add Controls and use a template. When you want to hide the dialog, call <code>HideDialogBox()</code>
  *
  * However, do not mark the dialog's wrapper as modified while it is being shown. This will cause redraw problems.
  *
@@ -115,7 +115,7 @@ class Modal extends Panel
 	/**
 	 * Modal constructor
      *
-     * @param QControl|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param null|string $strControlId
      */
 	public function __construct($objParentObject, $strControlId = null) {
@@ -170,16 +170,12 @@ class Modal extends Panel
 
 	/**
 	 * Overrides the parent to call the qc.bs.modal js initializer.
-	 *
-	 * @return string
 	 */
 
-	public function getEndScript() {
-		Application::executeControlCommand($this->getJqControlId(), "off", Application::PRIORITY_HIGH);
+	protected function makeJqWidget() {
+        Application::executeControlCommand($this->getJqControlId(), "off", Application::PRIORITY_HIGH);
 		$jqOptions = $this->makeJqOptions();
 		Application::executeControlCommand($this->ControlId, $this->getJqSetupFunction(), $jqOptions, Application::PRIORITY_HIGH);
-
-		return parent::getEndScript();
 	}
 
 	/**

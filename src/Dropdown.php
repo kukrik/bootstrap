@@ -10,13 +10,13 @@
 namespace QCubed\Bootstrap;
 
 use QCubed\Action\ActionBase;
+use QCubed\Control\ControlBase;
+use QCubed\Control\FormBase;
 use QCubed\Control\HList;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Html;
 use QCubed\Project\Application;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Type;
 use QCubed\Js;
 
@@ -45,7 +45,7 @@ class Dropdown extends HList {
 
 	/**
 	 * Dropdown constructor.
-     * @param QControl|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param null|string $strControlId
      */
 	public function __construct($objParentObject, $strControlId = null)
@@ -151,14 +151,12 @@ class Dropdown extends HList {
 	/**
 	 * Returns the javascript associated with the button.
 	 *
-	 * @return string
 	 * @throws Caller
 	 */
-	public function getEndScript() {
+	protected function makeJqWidget() {
 		// Trigger the dropdown select event on the main control
 		Application::executeSelectorFunction('#' . $this->ControlId . "_list", 'on', 'click', 'li',
 			new Js\Closure("\njQuery('#$this->ControlId').trigger ('bsdropdownselect', {id:this.id, value:\$j(this).data('value')});\n"), Application::PRIORITY_HIGH);
-		return parent::getEndScript();
 	}
 
 	/**

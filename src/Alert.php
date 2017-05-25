@@ -9,14 +9,14 @@
 
 namespace QCubed\Bootstrap;
 
+use QCubed\Control\ControlBase;
+use QCubed\Control\FormBase;
 use QCubed\Control\Panel;
 use QCubed\Exception\Caller;
 use QCubed\Html;
 use QCubed\Js;
 use QCubed\Project\Application;
 use QCubed\Type;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 
 /**
  * Class Alert
@@ -45,7 +45,7 @@ class Alert extends Panel {
 
     /**
      * Alert constructor.
-     * @param QControl|QForm $objParent
+     * @param ControlBase|FormBase $objParent
      * @param null $strControlId
      */
 	public function __construct ($objParent, $strControlId = null) {
@@ -77,14 +77,14 @@ class Alert extends Panel {
 	}
 
     /**
-     * @return string
+     * Attach the javascript to the control
      */
-	public function getEndScript() {
+	protected function makeJqWidget() {
+	    parent::makeJqWidget();
 		if ($this->blnDismissable) {
 			Application::executeControlCommand($this->ControlId, 'on', 'closed.bs.alert',
 				new Js\Closure("qcubed.recordControlModification ('{$this->ControlId}', '_Visible', false)"), Application::PRIORITY_HIGH);
 		}
-		return parent::getEndScript();
 	}
 
 	/**

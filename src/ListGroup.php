@@ -9,14 +9,15 @@
 
 namespace QCubed\Bootstrap;
 
+use QCubed\Control\ControlBase;
 use QCubed\Control\DataRepeater;
+use QCubed\Control\FormBase;
 use QCubed\Control\Proxy;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 use QCubed\Event;
 use QCubed\Action;
+use QCubed as Q;
 
 /**
  * Class ListGroup
@@ -40,7 +41,7 @@ class ListGroup extends DataRepeater
 
     /**
      * ListGroup constructor.
-     * @param QControl|QForm $objParentObject
+     * @param ControlBase|FormBase $objParentObject
      * @param null|string $strControlId
      * @throws Caller
      */
@@ -128,14 +129,12 @@ class ListGroup extends DataRepeater
     /**
      * An item in the list was clicked. This records what item was last clicked.
      *
-     * @param $strFormId
-     * @param $strControlId
-     * @param $strParam
+     * @param array $params
      */
-    public function itemClick($strFormId, $strControlId, $strParam)
+    public function itemClick($params)
     {
-        if ($strParam) {
-            $this->strSelectedItemId = $strParam;
+        if ($params) {
+            $this->strSelectedItemId = $params[ControlBase::ACTION_PARAM];
             if ($this->blnSaveState) {
                 $this->blnModified = true;
             }
@@ -187,18 +186,18 @@ class ListGroup extends DataRepeater
 
     public function sleep()
     {
-        $this->itemParamsCallback = QControl::sleepHelper($this->itemParamsCallback);
+        $this->itemParamsCallback = Q\Project\Control\ControlBase::sleepHelper($this->itemParamsCallback);
         parent::sleep();
     }
 
     /**
      * The object has been unserialized, so fix up pointers to embedded objects.
-     * @param QForm $objForm
+     * @param FormBase $objForm
      */
-    public function wakeup(QForm $objForm)
+    public function wakeup(FormBase $objForm)
     {
         parent::wakeup($objForm);
-        $this->itemParamsCallback = QControl::wakeupHelper($objForm, $this->itemParamsCallback);
+        $this->itemParamsCallback = Q\Project\Control\ControlBase::wakeupHelper($objForm, $this->itemParamsCallback);
     }
 
     /**

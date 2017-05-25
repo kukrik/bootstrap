@@ -9,13 +9,12 @@
 
 namespace QCubed\Bootstrap;
 
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
+use QCubed as Q;
 
 /**
  * Class Control
  *
- * Base bootstrap control. Set your QControl to inherit from this control if you want bootstrap functionality
+ * Base bootstrap control. Set your Control to inherit from this control if you want bootstrap functionality
  * across all your controls.
  *
  * The implementation passes off most of its functionality to a trait. 2 reasons: You can make a single control
@@ -30,13 +29,13 @@ use QCubed\Project\Control\FormBase as QForm;
  *
  * @package QCubed\Bootstrap
  */
-abstract class Control extends \QCubed\Control\ControlBase
+abstract class Control extends Q\Control\ControlBase
 {
     use ControlTrait;    // Pass off most functionality to the trait.
 
     /**
      * Control constructor.
-     * @param QControl|QForm $objParent
+     * @param Q\Control\ControlBase|Q\Control\FormBase $objParent
      * @param null $strControlId
      */
     public function __construct($objParent, $strControlId = null)

@@ -9,12 +9,13 @@
 
 namespace QCubed\Bootstrap;
 
+use QCubed\Control\ControlBase;
 use QCubed\Control\DataRepeater;
+use QCubed\Control\FormBase;
 use QCubed\Exception\Caller;
 use QCubed\Html;
 use QCubed\Type;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
+use QCubed as Q;
 
 /**
  * Accordion class
@@ -43,7 +44,7 @@ class Accordion extends DataRepeater
 
     /**
      * Accordion constructor.
-     * @param QControl|QForm $objParent
+     * @param ControlBase|FormBase $objParent
      * @param null $strControlId
      */
     public function __construct($objParent, $strControlId = null)
@@ -110,18 +111,18 @@ class Accordion extends DataRepeater
 
     public function sleep()
     {
-        $this->drawingCallback = QControl::sleepHelper($this->drawingCallback);
+        $this->drawingCallback = Q\Project\Control\ControlBase::sleepHelper($this->drawingCallback);
         parent::sleep();
     }
 
     /**
      * The object has been unserialized, so fix up pointers to embedded objects.
-     * @param QForm $objForm
+     * @param FormBase $objForm
      */
-    public function wakeup(QForm $objForm)
+    public function wakeup(FormBase $objForm)
     {
         parent::wakeup($objForm);
-        $this->drawingCallback = QControl::wakeupHelper($objForm, $this->drawingCallback);
+        $this->drawingCallback = Q\Project\Control\ControlBase::wakeupHelper($objForm, $this->drawingCallback);
     }
 
     /**

@@ -9,12 +9,12 @@
 
 namespace QCubed\Bootstrap;
 
+use QCubed\Control\ControlBase;
+use QCubed\Control\FormBase;
 use QCubed\Control\PaginatorBase;
 use QCubed\Exception\Caller;
 use QCubed\Html;
 use QCubed\Type;
-use QCubed\Project\Control\ControlBase as QControl;
-use QCubed\Project\Control\FormBase as QForm;
 
 /**
  * Class Paginator
@@ -40,7 +40,7 @@ class Paginator extends PaginatorBase
 
     /**
      * Paginator constructor.
-     * @param QForm|QControl $objParent
+     * @param FormBase|ControlBase $objParent
      * @param null|string $strControlId
      */
     public function __construct($objParent, $strControlId = null)
