@@ -12,6 +12,7 @@ namespace QCubed\Bootstrap;
 use QCubed\Exception\Caller;
 use QCubed\Exception\InvalidCast;
 use QCubed\Html;
+use QCubed\HtmlAttributeManagerBase;
 use QCubed\Project\Control\Checkbox;
 use QCubed\Project\Control\ListBox;
 use QCubed\QString;
@@ -308,6 +309,10 @@ trait ControlTrait
     // Abstract classes to squash warnings
     abstract public function markAsModified();
     abstract public function addCssClass($strClass);
+
+    /**
+     * @return HtmlAttributeManagerBase
+     */
     abstract public function getWrapperStyler();
 
     /**

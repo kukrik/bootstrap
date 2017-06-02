@@ -27,6 +27,13 @@ use QCubed as Q;
  * Usage: Create a Navbar object, and add a NavbarList for drop down menus, adding a NavbarItem to the list for each
  *          item in the list. You can also add NavbarItems directly to the Navbar object for a link in the navbar.
  *
+ * @property string $ContainerClass
+ * @property string $HeaderText
+ * @property string $HeaderAnchor
+ * @property string $Value
+ * @property string $SelectedId
+ * @property string $StyleClass
+ *
  * @package QCubed\Bootstrap
  */
 class Navbar extends Q\Project\Control\ControlBase
@@ -112,6 +119,11 @@ TMPL;
     }
 
 
+    /**
+     * @param string $strText
+     * @return mixed|string
+     * @throws Caller
+     */
     public function __get($strText)
     {
         switch ($strText) {
@@ -124,6 +136,8 @@ TMPL;
             case "Value":
             case "SelectedId":
                 return $this->strSelectedId;
+            case "StyleClass":
+                return $this->strStyleClass;
 
             default:
                 try {
@@ -135,6 +149,13 @@ TMPL;
         }
     }
 
+    /**
+     * @param $strText
+     * @param $mixValue
+     * @throws Caller
+     * @throws InvalidCast
+     * @return void
+     */
     public function __set($strText, $mixValue)
     {
         switch ($strText) {
