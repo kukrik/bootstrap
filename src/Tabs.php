@@ -48,8 +48,9 @@ class Tabs extends \QCubed\Project\Control\ControlBase
             $strItemHtml = null;
             if ($objChildControl->ControlId == $this->strSelectedId) {
                 $class .= ' active';
-                $strItemHtml = $objChildControl->render(false);
             }
+            $strItemHtml = $objChildControl->render(false);
+
             $strInnerHtml .= Html::renderTag('div',
                 [
                     'role' => 'tabpanel',
