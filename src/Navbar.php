@@ -114,7 +114,7 @@ TMPL;
         parent::makeJqWidget();
         Application::executeControlCommand(
             $this->ControlId, 'on', 'click', 'li',
-            new Js\Closure("qcubed.recordControlModification ('{$this->ControlId}', 'SelectedId', this.id); jQuery(this).trigger ('bsmenubarselect', this.id)"),
+            new Js\Closure("qcubed.recordControlModification ('{$this->ControlId}', 'SelectedId', this.id); jQuery(this).trigger ('bsmenubarselect', {id: this.id, value: jQuery(this).data('value')})"),
             Application::PRIORITY_HIGH);
     }
 
