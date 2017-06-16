@@ -9,6 +9,8 @@
 
 namespace QCubed\Bootstrap;
 
+use QCubed\Control\Panel;
+use QCubed\Html;
 use QCubed\QString;
 use QCubed\Type;
 
@@ -21,10 +23,18 @@ use QCubed\Type;
  */
 trait InputGroupTrait
 {
+    /** @var  string|null */
     protected $strSizingClass;
+    /** @var  string|null */
     protected $strLeftText;
+    /** @var  string|null */
     protected $strRightText;
+    /** @var bool */
     protected $blnInputGroup = false;    // for subclasses
+    /** @var  Panel|null */
+    protected $pnlLeftButtons;
+    /** @var  Panel|null */
+    protected $pnlRightButtons;
 
     /**
      * Wraps the give code with an input group tag.
@@ -34,52 +44,85 @@ trait InputGroupTrait
      */
     protected function wrapInputGroup($strControlHtml)
     {
-        if ($this->strLeftText || $this->strRightText || $this->blnInputGroup) {
-            $strControlHtml = sprintf('<div class="input-group %s">%s%s%s</div>',
-                $this->strSizingClass,
-                $this->getLeftHtml(),
-                $strControlHtml,
-                $this->getRightHtml()
-            );
+        if ($this->strLeftText ||
+            $this->strRightText ||
+            $this->blnInputGroup ||
+            $this->pnlLeftButtons ||
+            $this->pnlRightButtons
+        ) {
+            $strClass = 'input-group';
+            if ($this->strSizingClass) {
+                Html::addClass($strClass, $this->strSizingClass);
+            }
+
+            $strControlHtml = Html::renderTag('div', ['class' => $strClass],
+                $this->getLeftHtml() .
+                $strControlHtml .
+                $this->getRightHtml());
         }
 
         return $strControlHtml;
     }
 
+    /**
+     * @return string
+     */
     protected function getLeftHtml()
     {
         if ($this->strLeftText) {
             return sprintf('<span class="input-group-addon">%s</span>', QString::htmlEntities($this->strLeftText));
+        } elseif ($this->pnlLeftButtons) {
+            return $this->pnlLeftButtons->render(false);
         }
         return '';
     }
 
+    /**
+     * @return string
+     */
     protected function getRightHtml()
     {
         if ($this->strRightText) {
             return sprintf('<span class="input-group-addon">%s</span>', QString::htmlEntities($this->strRightText));
+        } elseif ($this->pnlRightButtons) {
+            return $this->pnlRightButtons->render(false);
         }
         return '';
     }
 
-    protected function sizingClass()
+    /**
+     * @return null|string
+     */
+    public function sizingClass()
     {
         return $this->strSizingClass;
     }
 
-    protected function leftText()
+    /**
+     * @return null|string
+     */
+    public function leftText()
     {
         return $this->strLeftText;
     }
 
-    protected function rightText()
+    /**
+     * @return null|string
+     */
+    public function rightText()
     {
         return $this->strRightText;
     }
 
+    /**
+     * @return void
+     */
     abstract public function markAsModified();
 
-    protected function setSizingClass($strSizingClass)
+    /**
+     * @param string $strSizingClass
+     */
+    public function setSizingClass($strSizingClass)
     {
         $strSizingClass = Type::cast($strSizingClass, Type::STRING);
         if ($strSizingClass != $this->strSizingClass) {
@@ -88,7 +131,10 @@ trait InputGroupTrait
         }
     }
 
-    protected function setLeftText($strLeftText)
+    /**
+     * @param string $strLeftText
+     */
+    public function setLeftText($strLeftText)
     {
         $strText = Type::cast($strLeftText, Type::STRING);
         if ($strText != $this->strLeftText) {
@@ -97,7 +143,10 @@ trait InputGroupTrait
         }
     }
 
-    protected function setRightText($strRightText)
+    /**
+     * @param string $strRightText
+     */
+    public function setRightText($strRightText)
     {
         $strText = Type::cast($strRightText, Type::STRING);
         if ($strText != $this->strRightText) {
@@ -105,4 +154,23 @@ trait InputGroupTrait
             $this->strRightText = $strText;
         }
     }
+
+    /**
+     * @param Panel $panel
+     */
+    public function setLeftButtonPanel(Panel $panel)
+    {
+        $panel->addCssClass('input-group-btn');
+        $this->pnlLeftButtons = $panel;
+    }
+
+    /**
+     * @param Panel $panel
+     */
+    public function setRightButtonPanel(Panel $panel)
+    {
+        $panel->addCssClass('input-group-btn');
+        $this->pnlRightButtons = $panel;
+    }
+
 }
