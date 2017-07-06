@@ -1,5 +1,5 @@
-<?php require(QCUBED_EXAMPLES_DIR . '/includes/header.inc.php'); ?>
-	<link href="<?= QCUBED_BOOTSTRAP_CSS ?>" rel="stylesheet">
+<?php     require(QCUBED_CONFIG_DIR . '/header.inc.php'); ?>
+    <link href="<?= QCUBED_BOOTSTRAP_CSS ?>" rel="stylesheet">
 
 <?php $this->renderBegin(); ?>
 
@@ -40,4 +40,4 @@
 	</div>
 
 <?php $this->renderEnd(); ?>
-<?php require(QCUBED_EXAMPLES_DIR . '/includes/footer.inc.php'); ?>
+<?php     require(QCUBED_CONFIG_DIR . '/footer.inc.php'); ?>

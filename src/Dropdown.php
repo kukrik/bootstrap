@@ -10,6 +10,7 @@
 namespace QCubed\Bootstrap;
 
 use QCubed\Action\ActionBase;
+use QCubed\Action\ActionParams;
 use QCubed\Control\ControlBase;
 use QCubed\Control\FormBase;
 use QCubed\Control\HList;
@@ -162,16 +163,17 @@ class Dropdown extends HList {
 	/**
 	 * An override to make sure the public value gets decrypted before being sent to the action function.
 	 *
-	 * @param ActionBase $objAction
-	 * @param $mixParameter
-	 * @return mixed
+	 * @param ActionParams $params
+	 * @return void
 	 */
-	protected function processActionParameters(ActionBase $objAction, $mixParameter) {
-		$params = parent::processActionParameters($objAction, $mixParameter);
+	protected function processActionParameters(ActionParams $params) {
+		parent::processActionParameters($params);
 		if ($this->blnEncryptValues) {
-			$params['param']['value'] = $this->decryptValue($mixParameter['value']); // Decrypt the value if needed.
+		    $actionParam = $params->ActionParameter;
+
+            $actionParam['value'] = $this->decryptValue($actionParam['value']); // Decrypt the value if needed.
+            $params->ActionParameter = $actionParam;
 		}
-		return $params;
 	}
 
 	/**
