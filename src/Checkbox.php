@@ -50,6 +50,8 @@ class Checkbox extends \QCubed\Project\Control\Checkbox
         return parent::renderLabelAttributes();
     }
 
+
+
     /**
      * @param string $strText
      * @param string $mixValue

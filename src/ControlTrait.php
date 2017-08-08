@@ -15,6 +15,7 @@ use QCubed\Html;
 use QCubed\HtmlAttributeManagerBase;
 use QCubed\Project\Control\Checkbox;
 use QCubed\Project\Control\ListBox;
+use QCubed\Project\Control\RadioButton;
 use QCubed\QString;
 use QCubed\TagStyler;
 use QCubed\Type;
@@ -160,13 +161,6 @@ trait ControlTrait
 
         $this->renderHelper(func_get_args(), __FUNCTION__);
 
-        try {
-            $strControlHtml = $this->getControlHtml();
-        } catch (Caller $objExc) {
-            $objExc->incrementOffset();
-            throw $objExc;
-        }
-
         $blnIncludeFor = false;
         // Try to automatically detect the correct value
         if ($this instanceof \QCubed\Project\Control\TextBox ||
@@ -176,6 +170,13 @@ trait ControlTrait
         }
 
         $strLabel = $this->renderLabel($blnIncludeFor) . "\n";
+
+        try {
+            $strControlHtml = $this->getControlHtml();
+        } catch (Caller $objExc) {
+            $objExc->incrementOffset();
+            throw $objExc;
+        }
 
         $strHtml = $this->strHtmlBefore . $strControlHtml . $this->strHtmlAfter . $this->getHelpBlock();
 
@@ -201,6 +202,24 @@ trait ControlTrait
             return '';
         }
 
+        $strLabelTag = "label";
+
+        /* Checkboxes and RadioButtons present a special problem. Bootstrap really wants these to have a label drawn after
+           the checkbox, which leaves us wondering what to do with the Name. So here, we try to use the Name as the label
+           if there is no Text, otherwise it will let the Text handle the label tag, and instead draw a Span for the name.
+        */
+        if ($this instanceof Checkbox || $this instanceof RadioButton) {
+            if ($this->Text) {
+                $strLabelTag = "span";  // superclass will draw the label
+            }
+            else {
+                // Note that this is going to change how the control is drawn, so it must come before the render function
+                $this->Text = $this->Name;
+                $this->Name = "";   // swap
+                return "";
+            }
+        }
+
         $objLabelStyler = $this->getLabelStyler();
         $attrOverrides['id'] = $this->ControlId . '_label';
 
@@ -208,7 +227,7 @@ trait ControlTrait
             $attrOverrides['for'] = $this->ControlId;
         }
 
-        return Html::renderTag('label', $objLabelStyler->renderHtmlAttributes($attrOverrides), QString::htmlEntities($this->strName), false, true);
+        return Html::renderTag($strLabelTag, $objLabelStyler->renderHtmlAttributes($attrOverrides), QString::htmlEntities($this->strName), false, true);
     }
 
     protected function getHelpBlock()
