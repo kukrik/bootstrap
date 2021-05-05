@@ -28,7 +28,7 @@ if (!defined('QCUBED_BOOTSTRAP_JS')) {
 }
 
 if (!defined('QCUBED_BOOTSTRAP_ASSETS_URL')) {
-    define('QCUBED_BOOTSTRAP_ASSETS_URL', QCUBED_BASE_URL . '/bootstrap/assets');
+    define('QCUBED_BOOTSTRAP_ASSETS_URL', dirname(QCUBED_BASE_URL) . '/bootstrap/assets');
 }
 
 
