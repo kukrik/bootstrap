@@ -1,11 +1,11 @@
 {
-    "name": "qcubed/bootstrap",
+    "name": "kukrik/bootstrap",
     "description": "QCubed wrappers for Twitter Bootstrap. Specifically for QCubed v4 and above.",
     "type": "qcubed-library",
     "keywords": ["qcubed", "bootstrap"],
     "license": "MIT",
     "require": {
-        "php": ">=5.5"
+        "php": ">=7.0"
     },
     "autoload": {
         "psr-4": {"QCubed\\Bootstrap\\": "src/"}
