@@ -119,7 +119,7 @@ class Nav extends HList
      */
     protected function tab_Click($params)
     {
-        $this->strActiveItemId = $params[ControlBase::ACTION_PARAM];
+        $this->strActiveItemId = $params->{ControlBase::ACTION_PARAM};
     }
 
     /**
