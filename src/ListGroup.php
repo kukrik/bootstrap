@@ -134,7 +134,7 @@ class ListGroup extends DataRepeater
     public function itemClick($params)
     {
         if ($params) {
-            $this->strSelectedItemId = $params[ControlBase::ACTION_PARAM];
+            $this->strSelectedItemId = $params->{ControlBase::ACTION_PARAM};
             if ($this->blnSaveState) {
                 $this->blnModified = true;
             }
